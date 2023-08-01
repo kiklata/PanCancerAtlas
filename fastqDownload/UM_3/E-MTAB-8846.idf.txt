@@ -1,0 +1,70 @@
+MAGE-TAB Version	1.1
+Investigation Title	Single-cell RNA-seq of tumor-infiltrating lymphocytes in metastatic uveal melanoma
+
+Experimental Design	disease state design
+Experimental Design Term Source REF	EFO
+Experimental Design Term Accession Number	EFO:0001756
+
+Experimental Factor Name	metastatic site	protocol
+Experimental Factor Type	metastatic site	protocol
+Experimental Factor Term Source REF
+Experimental Factor Term Accession Number
+
+Person Last Name	Karlsson	Nilsson
+Person First Name	Joakim	Jonas
+Person Mid Initials		A
+Person Email	joakim.karlsson@gu.se	jonas.a.nilsson@surgery.gu.se
+Person Phone
+Person Fax
+Person Affiliation	University of Gothenburg, Sahlgrenska Cancer Center	University of Gothenburg, Sahlgrenska Cancer Center
+Person Address	Sahlgrenska Cancer Center Medicinaregatan 1F 413 90 Gothenburg	Sahlgrenska Cancer Center Medicinaregatan 1F 413 90 Gothenburg
+Person Roles	submitter
+Person Roles Term Source REF
+Person Roles Term Accession Number
+
+Quality Control Type
+Quality Control Term Source REF
+Quality Control Term Accession Number
+
+Replicate Type
+Replicate Term Source REF
+Replicate Term Accession Number
+
+Normalization Type
+Normalization Term Source REF
+Normalization Term Accession Number
+
+Date of Experiment	2018-06-11
+Public Release Date	2020-03-16
+
+PubMed ID
+Publication DOI
+Publication Author List
+Publication Title
+Publication Status
+Publication Status Term Source REF
+Publication Status Term Accession Number
+
+Experiment Description	Metastatic uveal melanoma generally responds poorly to immunotherapy. The aim here was to sequence tumor-infiltrating lymphocytes from uveal melanoma metastases to study their phenotypes and T-cell receptor (TCR) clonotypes. We performed paired single-cell transcriptome and TCR sequencing using the 10x Genomics platform of IL2-expanded tumor-infiltrating lymphocytes from 7 liver and 1 subcutaneous metastasis.
+
+Protocol Name	P-MTAB-94466	P-MTAB-94467	P-MTAB-94464	P-MTAB-94465	P-MTAB-94468	P-MTAB-94463
+Protocol Type	nucleic acid sequencing protocol	nucleic acid sequencing protocol	nucleic acid extraction protocol	nucleic acid library construction protocol	nucleic acid library construction protocol	sample collection protocol
+Protocol Term Source REF	EFO	EFO	EFO	EFO	EFO	EFO
+Protocol Term Accession Number	EFO_0004170	EFO_0004170	EFO_0002944	EFO_0004184	EFO_0004184	EFO_0005518
+Protocol Description	Gene expression libraries were run on a NextSeq instrument (Illumina).	V(D)J libraries were sequenced on a MiSeq instrument (Illumina).	Cells were counted and 7 000 cells were injected into a single cell library preparation instrument (10x Genomics). Single cells were isolated into barcoded gel beads-in-emulsion (GEMs) using Chromium microfluidic chips (Chromium Single Cell A Chip Kit, PN: 1000009, 10x Genomics), after which barcodes and sample index sequences were ligated to transcripts. Barcoded first-strand cDNA were then purified using magnetic beads and amplified with PCR.	5' expression libraries were generated, according to the kit descriptions provided by 10x Genomics, from amplified cDNA using the following kits: Chromium Single Cell 3'/5' Library Construction Kit (PN: 1000020, 10x Genomics), Chromium Single Cell 5' Library & Gel Bead Kit (PN: 1000006), Chromium Single Cell A Chip Kit (PN: 1000009, 10x Genomics) and Chromium i7 Multiplex Kit (PN: 120262, 10x Genomics)	V(D)J segments were enriched, according to the kit descriptions provided by 10x Genomics, from amplified cDNA using Chromium Single Cell V(D)J Enrichment Kit, Human T Cell (PN: 1000005, 10x Genomics) and sequencing adapters ligated.	Small pieces of tumor biopsies were cultured for two weeks in TIL medium (RPMI1640 containing 10% human serum and 6000 U/ml IL-2). Young TIL (yTIL) cultures were then cryopreserved before use. Two days before performing the single cell experiments, yTIL cultures were thawed and cultured in TIL medium containing 600 U IL-2.
+Protocol Parameters
+Protocol Hardware	NextSeq 500	Illumina MiSeq
+Protocol Software
+Protocol Contact
+
+Term Source Name	EFO	ArrayExpress
+Term Source File	http://www.ebi.ac.uk/efo/	http://www.ebi.ac.uk/arrayexpress/
+Term Source Version	2.38
+
+SDRF File	E-MTAB-8846.sdrf.txt
+Comment [TemplateType]	Human - Single-cell sequencing
+Comment [Submitted Name]	Single-cell RNA-seq of tumor-infiltrating lymphocytes in metastatic uveal melanoma
+Comment [SecondaryAccession]	ERP120419
+Comment [SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERR3978571-ERR3978615
+Comment [AEExperimentType]	RNA-seq of coding RNA from single cells
+Comment[ArrayExpressAccession]	E-MTAB-8846

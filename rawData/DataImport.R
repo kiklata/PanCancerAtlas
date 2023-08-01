@@ -2,18 +2,18 @@ library(Seurat)
 library(dplyr)
 
 # basic--------------
-count = Read10X('~/Project/tempData/STAD_9/',gene.column = 1)
+count = Read10X('~/Project/PanCancerAtlas/data/AML_7/raw/HTO_R306_R309')
 count = Read10X_h5('~/Project/tempData/SKCM_10/GSE174401_filtered_feature_bc_matrix.h5')
 
 meta = data.table::fread('~/Project/tempData/STAD_9/GSE234129_meta.tsv.gz') %>% as.data.frame()
 rownames(meta) = meta$cell_barcodes
-seu = CreateSeuratObject(count)
+seu = CreateSeuratObject(count,min.cells = 3,min.features = 200)
 seu = AddMetaData(seu,meta)
 saveRDS(seu,file = '~/Project/tempData/STAD_9/seu/STAD_9.rds')
 
 # named based samples------------
 #subdir = 'F'
-wd = paste0('~/Project/PanCancerAtlas/data/HNSC_2/')
+wd = paste0('~/Project/PanCancerAtlas/data/AML_7/')
 all.sample = list.dirs(wd,recursive = F,full.names = F)
 all.sample = list.files(wd,recursive = F,full.names = F,pattern = 'h5')
 

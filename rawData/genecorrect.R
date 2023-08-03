@@ -1,4 +1,4 @@
-gene.correct = function(obj) {
+gene.correct = function(obj,check.dup = FALSE) {
   library(dplyr)
   library(Seurat)
   library(HGNChelper)
@@ -8,13 +8,14 @@ gene.correct = function(obj) {
   # This code checks the gene symbols in the 'exp.gene' variable against the HGNC database to ensure they are valid human gene symbols.
   # If any symbols are not valid, they are filtered out and their suggested symbols are used instead.
   # The resulting suggested symbols are then used to replace the original gene symbols in the 'exp.gene' variable.
+  human.map = getCurrentHumanMap()
   
   exp.gene = rownames(obj)
   exp.gene = stringr::str_replace(exp.gene,
                                   pattern = c("(\\.)[0-9+]"),
                                   replacement = '')
   
-  hgnc.check = checkGeneSymbols(exp.gene, species = 'human')
+  hgnc.check = checkGeneSymbols(exp.gene, species = 'human', map = human.map)
   
   remove.gene = hgnc.check %>% filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
   
@@ -49,6 +50,7 @@ gene.correct = function(obj) {
   count = count[!rownames(count) %in% remove.gene, ]
   
   # deal with original duplicated symbols-----------------------
+  if(check.dup == TRUE){
   all.dup.gene = rownames(count)[rownames(count) %>% duplicated()] %>% unique()
   
   if (length(all.dup.gene) > 0) {
@@ -92,6 +94,7 @@ gene.correct = function(obj) {
   } else {
     NULL
   }
+  }else{NULL}
   
   if (length(previous.exist.gene) == 0) {
     NULL

@@ -94,10 +94,10 @@ saveRDS(cell,file = '~/Project/PanCancerAtlas/data/NSCLC_12/cell_meta.rds')
 
 # count samples--------------
 
-dataset = c('~/Project/RMC_1/')
-filea = list.files(dataset,recursive = F,full.names = F,pattern = 'tsv')
+dataset = c('~/Project/PanCancerAtlas/data/BRCA_6_CRC_4_OV_3/')
+filea = list.files(dataset,recursive = F,full.names = F,pattern = 'csv')
 #tags = list.files(dataset,recursive = F,full.names = F,pattern = 'Sample')
-samples = stringr::str_sub(filea,11,-19)
+samples = stringr::str_sub(filea,1,-15)
 seu.list=list()
 count = data.table::fread(paste0(dataset,filea[1])) %>% as.data.frame()
 #tag = data.table::fread(paste0(dataset,tags[1])) %>% as.data.frame()

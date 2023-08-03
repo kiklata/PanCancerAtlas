@@ -11,90 +11,45 @@ gene.correct = function(obj,check.dup = FALSE) {
   human.map = getCurrentHumanMap()
   
   exp.gene = rownames(obj)
-  exp.gene = stringr::str_replace(exp.gene,
-                                  pattern = c("(\\.)[0-9+]"),
-                                  replacement = '')
-  
-  hgnc.check = checkGeneSymbols(exp.gene, species = 'human', map = human.map)
-  
-  remove.gene = hgnc.check %>% filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
-  
-  trans.gene = filter(hgnc.check, Approved == 'FALSE') %>% filter(., Suggested.Symbol != '') # all symbols need to be converted
-  
-  for (i in 1:nrow(trans.gene)) {
-    trans.gene$Suggested.Symbol[i] = strsplit(trans.gene$Suggested.Symbol[i], ' /// ')[[1]][1]
-    
-  }
-  # This code block extracts the original gene symbols from a matrix based on whether they exist or not in a list of gene symbols.
-  # It then converts the extracted symbols to their corresponding suggested symbols using a translation matrix.
-  # The resulting converted symbols are stored in two separate vectors: previous.exist.gene.new and previous.non.gene.new.
-  # The original symbols that were extracted are also stored in two separate vectors: previous.exist.gene and previous.non.gene.
-  
-  previous.exist.gene = trans.gene$x[trans.gene$Suggested.Symbol %in% exp.gene] # neo-symbols is existed in the matrix, extract the org-symbols
-  previous.non.gene = trans.gene$x[!trans.gene$Suggested.Symbol %in% exp.gene] # neo-symbols is not existed in the matrix, extract the org-symbols
-  
-  previous.exist.gene.new = trans.gene$Suggested.Symbol[trans.gene$Suggested.Symbol %in% exp.gene] # converted pre-existed symbols
-  previous.non.gene.new = trans.gene$Suggested.Symbol[!trans.gene$Suggested.Symbol %in% exp.gene] # converted non-existed symbols
-  
-  # This function corrects gene symbols in the RNA-seq count matrix. It takes in a list of previous gene symbols and a list of new gene symbols,
-  # and replaces the old symbols with the new ones in the count matrix. If there are duplicated symbols, it combines the counts for those symbols.
-  # The function returns a new count matrix with corrected gene symbols.
-  count = obj@assays$RNA@counts
-  
-  row.n = nrow(count)
-  col.n = ncol(count)
-  
-  cli_alert_info("Detect a {col.n} cells by {row.n} genes matrix")
-  
-  rownames(count) = exp.gene
-  count = count[!rownames(count) %in% remove.gene, ]
   
   # deal with original duplicated symbols-----------------------
-  if(check.dup == TRUE){
-  all.dup.gene = rownames(count)[rownames(count) %>% duplicated()] %>% unique()
-  
-  if (length(all.dup.gene) > 0) {
-    time.start = Sys.time()
+  if(check.dup == FALSE){
+    hgnc.check = checkGeneSymbols(exp.gene, species = 'human', map = human.map)
     
-    new.mat = count[all.dup.gene, ] %>% as.matrix() %>% as.data.table()
-    new.mat[, 'symbol'] = all.dup.gene
-    count = count[!rownames(count) %in% all.dup.gene,]
+    remove.gene = hgnc.check %>% filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
     
-    sub.new.mat.sum.list = list()
-    for (i in 1:length(all.dup.gene)) {
-      sub.new.mat = new.mat[symbol == all.dup.gene[i]] %>% .[, symbol := NULL] %>% transpose() %>% as.matrix()
-      #sub.new.mat = sub.new.mat[, lapply(.SD,sum), by = symbol]
-      sub.new.mat.sum.list[[all.dup.gene[i]]] = apply(sub.new.mat, 1, sum) %>% as.data.table() %>% transpose()
+    trans.gene = filter(hgnc.check, Approved == 'FALSE') %>% filter(., Suggested.Symbol != '') # all symbols need to be converted
+    
+    for (i in 1:nrow(trans.gene)) {
+      trans.gene$Suggested.Symbol[i] = strsplit(trans.gene$Suggested.Symbol[i], ' /// ')[[1]][1]
       
     }
-    #new.mat = as.matrix(new.mat[, lapply(.SD,sum), by = symbol])
-    sub.new.mat.sum = rbindlist(sub.new.mat.sum.list, use.names = T)
-    colnames(sub.new.mat.sum) = colnames(count)
-    sub.new.mat.sum[, 'symbol'] = all.dup.gene
-    #sub.new.mat.sum = as.matrix(sub.new.mat.sum)
-    sub.new.mat.sum = as.matrix(sub.new.mat.sum, rownames = 'symbol')
-    #rownames(sub.new.mat.sum) = all.dup.gene
-    #rownames(new.mat) = new.mat[,'symbol']
-    #sub.new.mat.sum[,'symbol'] = NULL
-    sub.new.mat.sum.predup = sub.new.mat.sum
+    # This code block extracts the original gene symbols from a matrix based on whether they exist or not in a list of gene symbols.
+    # It then converts the extracted symbols to their corresponding suggested symbols using a translation matrix.
+    # The resulting converted symbols are stored in two separate vectors: previous.exist.gene.new and previous.non.gene.new.
+    # The original symbols that were extracted are also stored in two separate vectors: previous.exist.gene and previous.non.gene.
     
-    count = rbind(count, sub.new.mat.sum.predup)
+    previous.exist.gene = trans.gene$x[trans.gene$Suggested.Symbol %in% exp.gene] # neo-symbols is existed in the matrix, extract the org-symbols
+    previous.non.gene = trans.gene$x[!trans.gene$Suggested.Symbol %in% exp.gene] # neo-symbols is not existed in the matrix, extract the org-symbols
     
-    time.end = Sys.time()
-    tbld = difftime(time.end, time.start, units = 'auto')[[1]] %>% round(., 1)
-    tbld_unit = difftime(time.end, time.start, units = 'auto') %>% units
+    previous.exist.gene.new = trans.gene$Suggested.Symbol[trans.gene$Suggested.Symbol %in% exp.gene] # converted pre-existed symbols
+    previous.non.gene.new = trans.gene$Suggested.Symbol[!trans.gene$Suggested.Symbol %in% exp.gene] # converted non-existed symbols
     
-    cli_alert_success(paste0(
-      "Converted ",
-      length(all.dup.gene),
-      " original duplicated symbols in {tbld} {tbld_unit}"
-    ))
+    # This function corrects gene symbols in the RNA-seq count matrix. It takes in a list of previous gene symbols and a list of new gene symbols,
+    # and replaces the old symbols with the new ones in the count matrix. If there are duplicated symbols, it combines the counts for those symbols.
+    # The function returns a new count matrix with corrected gene symbols.
+    count = obj@assays$RNA@counts
     
+    row.n = nrow(count)
+    col.n = ncol(count)
     
-  } else {
-    NULL
-  }
-  }else{NULL}
+    cli_alert_info("Detect a {col.n}×{row.n} cell by gene matrix")
+    
+    rownames(count) = exp.gene
+    count = count[!rownames(count) %in% remove.gene, ]    
+  }else{
+    NULL # tbc
+    }
   
   if (length(previous.exist.gene) == 0) {
     NULL

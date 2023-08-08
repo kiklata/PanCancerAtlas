@@ -1,20 +1,19 @@
-gene.correct = function(obj,check.dup = FALSE) {
+gene.correct = function(obj, map,check.dup = FALSE) {
   library(dplyr)
   library(Seurat)
   library(HGNChelper)
   library(cli)
   library(data.table)
   
+  human.map = map
   # This code checks the gene symbols in the 'exp.gene' variable against the HGNC database to ensure they are valid human gene symbols.
   # If any symbols are not valid, they are filtered out and their suggested symbols are used instead.
   # The resulting suggested symbols are then used to replace the original gene symbols in the 'exp.gene' variable.
-  human.map = getCurrentHumanMap()
-  
   exp.gene = rownames(obj)
   
   # deal with original duplicated symbols-----------------------
   if(check.dup == FALSE){
-    hgnc.check = checkGeneSymbols(exp.gene, species = 'human', map = human.map)
+    suppressWarnings({hgnc.check = checkGeneSymbols(exp.gene, species = 'human', map = human.map)})
     
     remove.gene = hgnc.check %>% filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
     
@@ -103,9 +102,9 @@ gene.correct = function(obj,check.dup = FALSE) {
     all.dup.gene = all.exist.gene.correct[all.exist.gene.correct %>% duplicated()] %>% unique()
     sub.new.mat.sum.list = list()
     for (i in 1:length(all.dup.gene)) {
-      sub.new.mat = new.mat[symbol == all.dup.gene[i]] %>% .[, symbol := NULL] %>% transpose() %>% as.matrix()
+      sub.new.mat = new.mat[symbol == all.dup.gene[i]] %>% .[, symbol := NULL] %>% transpose()
       #sub.new.mat = sub.new.mat[, lapply(.SD,sum), by = symbol]
-      sub.new.mat.sum.list[[all.dup.gene[i]]] = apply(sub.new.mat, 1, sum) %>% as.data.table() %>% transpose()
+      sub.new.mat.sum.list[[all.dup.gene[i]]] = sub.new.mat[,sums := rowSums(.SD)] %>% .[,'sums'] %>% transpose()
       
     }
     #new.mat = as.matrix(new.mat[, lapply(.SD,sum), by = symbol])
@@ -187,9 +186,9 @@ gene.correct = function(obj,check.dup = FALSE) {
   all.dup.gene = all.non.gene.correct[all.non.gene.correct %>% duplicated()] %>% unique()
   sub.new.mat.sum.list = list()
   for (i in 1:length(all.dup.gene)) {
-    sub.new.mat = new.mat[symbol == all.dup.gene[i]] %>% .[, symbol := NULL] %>% transpose() %>% as.matrix()
+    sub.new.mat = new.mat[symbol == all.dup.gene[i]] %>% .[, symbol := NULL] %>% transpose() 
     #sub.new.mat = sub.new.mat[, lapply(.SD,sum), by = symbol]
-    sub.new.mat.sum.list[[all.dup.gene[i]]] = apply(sub.new.mat, 1, sum) %>% as.data.table() %>% transpose()
+    sub.new.mat.sum.list[[all.dup.gene[i]]] = sub.new.mat[,sums := rowSums(.SD)] %>% .[,'sums'] %>% transpose()
     
   }
   #new.mat = as.matrix(new.mat[, lapply(.SD,sum), by = symbol])
@@ -223,7 +222,11 @@ gene.correct = function(obj,check.dup = FALSE) {
   correct.obj = CreateSeuratObject(count.new,
                                    meta.data = obj@meta.data,
                                    min.cells = 3)
+  row.n = nrow(correct.obj)
+  col.n = ncol(correct.obj)
   
+  cli_alert_info("Generated a {col.n}×{row.n} cell by gene matrix")
+
   if (length(obj@assays) == 1) {
     NULL
   } else {

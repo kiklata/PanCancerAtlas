@@ -119,6 +119,10 @@ gene.correct = function(obj, map) {
     
     new.mat[, 'symbol'] = all.non.gene.correct
     all.dup.gene = all.non.gene.correct[all.non.gene.correct %>% duplicated()] %>% unique()
+    
+    if(length(all.dup.gene) == 0){
+      new.mat = new.mat %>% as.matrix(., rownames = 'symbol')
+    }else {
     sub.new.mat.sum.list = list()
     for (i in 1:length(all.dup.gene)) {
       sub.new.mat = new.mat[symbol == all.dup.gene[i]] %>% .[, symbol := NULL] %>% transpose()
@@ -130,6 +134,8 @@ gene.correct = function(obj, map) {
     sub.new.mat.sum[, 'symbol'] = all.dup.gene
     new.mat = new.mat[!symbol %in% all.dup.gene]
     new.mat = rbind(new.mat, sub.new.mat.sum) %>% as.matrix(., rownames = 'symbol')
+    }
+    
     sub.new.mat.sum.nonexist = new.mat
     
     count.new = rbind(count.new, sub.new.mat.sum.nonexist)

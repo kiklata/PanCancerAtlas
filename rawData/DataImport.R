@@ -13,12 +13,13 @@ saveRDS(seu,file = '~/Project/tempData/STAD_9/seu/STAD_9.rds')
 
 # named based samples------------
 #subdir = 'F'
-wd = paste0('~/Project/PanCancerAtlas/data/AML_7/')
+wd = paste0('~/Project/PanCancerAtlas/data/GCTB_2/')
 all.sample = list.dirs(wd,recursive = F,full.names = F)
-all.sample = list.files(wd,recursive = F,full.names = F,pattern = 'h5')
+all.sample = list.files(wd,recursive = F,full.names = F,pattern = 'filter')
 
 samples.name = stringr::str_sub(all.sample,12,-31)
 samples.name = all.sample
+samples.name = c('UM1','UM23')
 #barcodes = list.files(wd,pattern = '.barcode',recursive = T)
 #features = list.files(wd,pattern = '.gene',recursive = T)
 #matrixs = list.files(wd,pattern = '.matrix',recursive = T)
@@ -26,15 +27,15 @@ samples.name = all.sample
 seu.list=list()
 for (i in 1:length(all.sample)) {
 
-  count = Read10X(paste0(wd,all.sample[i]))
+  count = Read10X(paste0(wd,all.sample[i]),)
   #count = count[,!colnames(count) %>% duplicated()]
   #count = count[rownames(count)[substring(rownames(count),1,6)=='GRCh38'],]
   #rownames(count) = gsub('GRCh38_','',x = rownames(count))
   #count = Read10X_h5(paste0(wd,all.sample[i]))
   
-  seu = CreateSeuratObject(count)
-  #seu = CreateSeuratObject(count$`Gene Expression`)
-  #seu[['ADT']] = CreateAssayObject(count$`Antibody Capture`)
+  seu = CreateSeuratObject(count,min.features = 200)
+  #seu = CreateSeuratObject(count$`Gene Expression`,min.features = 200)
+  #seu[['CMO']] = CreateAssayObject(counts = count$`Multiplexing Capture`[,colnames(seu)])
   
   #meta = read.delim(paste0(wd,i,'/metadata.csv.gz'))
   #rownames(meta) = meta[,1]
@@ -44,7 +45,7 @@ for (i in 1:length(all.sample)) {
 saveRDS(seu.list,file = paste0(wd,'seu/seu.list.rds'))
 
 # count basic----------------
-count = data.table::fread('~/Project/tempData/NSCLC_27/GSE207422_NSCLC_scRNAseq_UMI_matrix.txt.gz') %>% as.data.frame()
+count = data.table::fread('~/Project/PanCancerAtlas/data/HNSC_5/raw/GSM4546857_LSCC01_DBEC_UMI.csv.gz') %>% as.data.frame()
 #count = Matrix::readMM('~/Project/tempData/SKCM_11/GSE200218_sc_sn_counts.mtx.gz')
 count[1:10,1:10]
 meta = read.delim("~/Project/tempData/NSCLC_27/GSE193531_cell-level-metadata.csv.gz",sep = ',' )
@@ -94,12 +95,12 @@ saveRDS(cell,file = '~/Project/PanCancerAtlas/data/NSCLC_12/cell_meta.rds')
 
 # count samples--------------
 
-dataset = c('~/Project/PanCancerAtlas/data/BRCA_6_CRC_4_OV_3/')
-filea = list.files(dataset,recursive = F,full.names = F,pattern = 'csv')
+dataset = c('~/Project/PanCancerAtlas/data/MM_15/')
+filea = list.files(dataset,recursive = F,full.names = F,pattern = 'gz')
 #tags = list.files(dataset,recursive = F,full.names = F,pattern = 'Sample')
-samples = stringr::str_sub(filea,1,-15)
+samples = stringr::str_sub(filea,12,-26)
 seu.list=list()
-count = data.table::fread(paste0(dataset,filea[1])) %>% as.data.frame()
+count = data.table::fread(paste0(dataset,filea[2])) %>% as.data.frame()
 #tag = data.table::fread(paste0(dataset,tags[1])) %>% as.data.frame()
 count[1:5,1:5]
 #meta = data.table::fread('~/Project/tempData/SKCM_11/GSE200218_sc_sn_metadata.csv.gz') %>% as.data.frame()
@@ -139,7 +140,7 @@ rownames(count) = paste0(count[,1])
 count[,c(1)] = NULL
 #for (k in 1:ncol(count)){colnames(count)[k] = strsplit(colnames(count)[k],'\\|')[[1]][1]}
 #colnames(count) = gsub('_membrane','',colnames(count)) %>% gsub('_secreted','',.) %>% gsub('_refseq','',.)
-#count = t(count) %>% as.data.frame()
+#count = t(count)
 #rownames(meta) = colnames(count)
 #rownames(count) = count[,'SYMBOL']
 #colnames(count) = paste0('cell_',count[1,])
@@ -162,8 +163,8 @@ rm(list = ls())
 
 
 # get samplename ----------------------------------------------------------
-dataset = c('~/Project/PanCancerAtlas/data/HNSC_2/')
-filea = list.files(dataset,recursive = F,full.names = F,pattern = 'GS') %>% grep('barcodes',.,value = T)
+dataset = c('~/Project/PanCancerAtlas/data/AML_2/')
+filea = list.files(dataset,recursive = F,full.names = F,pattern = 'GSM') %>% grep('barcodes',.,value = T)
 samples =  stringr::str_sub(filea,12,-17) %>% as.data.frame(.)
-write.table(samples,file = '/home/zhepan/Project/tempData/samples.txt',col.names = F,row.names = F,quote = F,sep = '\t')
+write.table(samples,file = '~/samples.txt',col.names = F,row.names = F,quote = F,sep = '\t')
 

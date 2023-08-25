@@ -19,7 +19,7 @@ gene.correct = function(obj, map) {
   
   remove.gene = hgnc.check %>% filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
 
-  count = obj@assays$RNA@counts
+  count = obj[['RNA']]@counts
   
   row.n = nrow(count)
   col.n = ncol(count)
@@ -157,6 +157,7 @@ gene.correct = function(obj, map) {
   correct.obj = CreateSeuratObject(count.new,
                                    meta.data = obj@meta.data,
                                    min.cells = 3)
+
   row.n = nrow(correct.obj)
   col.n = ncol(correct.obj)
   

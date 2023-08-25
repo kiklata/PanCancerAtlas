@@ -1,0 +1,23 @@
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/080/SRR12603780/SRR12603780_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/080/SRR12603780/SRR12603780_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/086/SRR12603786/SRR12603786_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/086/SRR12603786/SRR12603786_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/082/SRR12603782/SRR12603782_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/082/SRR12603782/SRR12603782_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/084/SRR12603784/SRR12603784_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/084/SRR12603784/SRR12603784_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/087/SRR12603787/SRR12603787_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/087/SRR12603787/SRR12603787_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/090/SRR12603790/SRR12603790_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/090/SRR12603790/SRR12603790_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/081/SRR12603781/SRR12603781_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/081/SRR12603781/SRR12603781_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/083/SRR12603783/SRR12603783_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/083/SRR12603783/SRR12603783_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/085/SRR12603785/SRR12603785_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/085/SRR12603785/SRR12603785_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/088/SRR12603788/SRR12603788_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/088/SRR12603788/SRR12603788_2.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/089/SRR12603789/SRR12603789_1.fastq.gz .
+ascp -QT -l 300m -P 33001 -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/SRR126/089/SRR12603789/SRR12603789_2.fastq.gz .
+

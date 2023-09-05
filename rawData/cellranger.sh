@@ -30,5 +30,4 @@ do
   rm -rf $fastq
 done
 
-
-curl https://sctapi.ftqq.com/SCT167047TINLpe9UwpLd9LmqT04NylUuh.send?title=Part
+curl -X POST https://sctapi.ftqq.com/SCT167047TyIQz75wID4jMUfJ4EGGbELEN.send?title=Done

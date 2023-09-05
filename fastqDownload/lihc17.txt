@@ -1,0 +1,5 @@
+https://sra-pub-src-1.s3.amazonaws.com/SRR14424782/106_possorted_genome_bam.bam.1
+https://sra-pub-src-2.s3.amazonaws.com/SRR14424780/119_possorted_genome_bam.bam.1
+https://sra-pub-src-2.s3.amazonaws.com/SRR14424779/713_possorted_genome_bam.bam.1
+https://sra-pub-src-2.s3.amazonaws.com/SRR14424778/725_possorted_genome_bam.bam.1
+https://sra-pub-src-2.s3.amazonaws.com/SRR14424777/740_possorted_genome_bam.bam.1

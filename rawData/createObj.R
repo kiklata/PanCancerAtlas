@@ -9,23 +9,24 @@ library(dplyr)
 
 # seu --------------
 
-data = 'SKCM_9'
+data = 'BRCA_25'
 
 seu.list@assays[["RNA"]]@data@Dimnames[[2]] %>% stringr::str_sub(.,18) %>% table
-seu.list$sample_name = seu.list@assays[["RNA"]]@data@Dimnames[[2]] %>% stringr::str_sub(.,18)
+seu.list$sample_name = seu.list@assays[["RNA"]]@data@Dimnames[[2]] %>% stringr::str_sub(.,1,-18)
 
 seu.list$sample_name = paste0(seu.list$sample_id)
 seu.list$sample_name = Idents(seu.list)
 seu.list$sample_name = data
 
-seu.list$sample_name = stringr::str_sub(seu.list$Samples,1,-18)
+seu.list$sample_name = stringr::str_sub(seu.list$Samples,1,-17)
 
 # seu.list------------
 
 for (i in 1:length(seu.list)) {
   #names(seu.list)[i] = seu.list[[i]]$orig.ident %>% unique() %>% as.character()
   seu.list[[i]]$sample_name = paste0(names(seu.list)[i])
-  #seu.list[[i]]$sample_name = seu.list[[i]]$orig.ident
+  
+  #seu.list[[i]]$sample_name = seu.list[[i]]$CellID %>% stringr::str_sub(.,18)
   #seu.list[[i]]$sample_name = paste0(names(seu.list)[i],'_',seu.list[[i]]@assays[["RNA"]]@data@Dimnames[[2]] %>% substring(.,18))
 }
 
@@ -38,7 +39,7 @@ seu.list = merge(seu.list[[1]],seu.list[2:length(seu.list)],add.cell.ids = names
 
 seu.list = seu.list %>% gene.correct(., map = human.map)
 
-saveRDS(seu.list,file = paste0(new.path,data,"/HumanIntegratedTumor.seu.list.rds"))
+saveRDS(seu.list,file = paste0(new.path,data,"/seu.list.rds"))
 
 
 # ENSG --------------------------------------------------------------------

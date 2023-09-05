@@ -13,7 +13,7 @@ saveRDS(seu,file = '~/Project/tempData/STAD_9/seu/STAD_9.rds')
 
 # named based samples------------
 #subdir = 'F'
-wd = paste0('~/Project/PanCancerAtlas/data/GCTB_2/')
+wd = paste0('~/Project/PanCancerAtlas/data/BRCA_25/')
 all.sample = list.dirs(wd,recursive = F,full.names = F)
 all.sample = list.files(wd,recursive = F,full.names = F,pattern = 'filter')
 
@@ -45,8 +45,8 @@ for (i in 1:length(all.sample)) {
 saveRDS(seu.list,file = paste0(wd,'seu/seu.list.rds'))
 
 # count basic----------------
-count = data.table::fread('~/Project/PanCancerAtlas/data/HNSC_5/raw/GSM4546857_LSCC01_DBEC_UMI.csv.gz') %>% as.data.frame()
-#count = Matrix::readMM('~/Project/tempData/SKCM_11/GSE200218_sc_sn_counts.mtx.gz')
+count = data.table::fread('~/Project/PanCancerAtlas/data/HNSC_10/GSM7324294_Count_data_IMCISION.txt.gz') %>% as.data.frame()
+#count = Matrix::readMM('~/Project/PanCancerAtlas/data/NSCLC_2/EC.mtx')
 count[1:10,1:10]
 meta = read.delim("~/Project/tempData/NSCLC_27/GSE193531_cell-level-metadata.csv.gz",sep = ',' )
 rownames(meta) = meta[,1]
@@ -68,8 +68,8 @@ count[,c(1)] = NULL
 #count = t(count) %>% as.data.frame()
 #rownames(meta) = meta[,1]
 seu = CreateSeuratObject(count)
-seu = AddMetaData(seu,metadata = meta)
-saveRDS(seu,file ='~/Project/tempData/NSCLC_27/NSCLC_27.rds')
+seu = AddMetaData(seu)
+saveRDS(seu,file ='~/Project/PanCancerAtlas/data/HNSC_10/seu.list.rds')
 
 
 # 3CA ------------
@@ -163,7 +163,7 @@ rm(list = ls())
 
 
 # get samplename ----------------------------------------------------------
-dataset = c('~/Project/PanCancerAtlas/data/AML_2/')
+dataset = c('~/Project/PanCancerAtlas/data/BRCA_25/')
 filea = list.files(dataset,recursive = F,full.names = F,pattern = 'GSM') %>% grep('barcodes',.,value = T)
 samples =  stringr::str_sub(filea,12,-17) %>% as.data.frame(.)
 write.table(samples,file = '~/samples.txt',col.names = F,row.names = F,quote = F,sep = '\t')

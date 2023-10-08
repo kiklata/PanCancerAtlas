@@ -1,0 +1,1 @@
+tar czvf ${1}.tar.gz ${1} && aliyunpan u ${1}.tar.gz /data/PanCancerAtlas/ && rm -rf ${1} && echo ${1} success >> done.txt

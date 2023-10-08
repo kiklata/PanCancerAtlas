@@ -1,7 +1,7 @@
 library(Seurat)
 library(dplyr)
 
-dataset = 'STAD_10'
+dataset = 'HNSC_11'
 
 meta.paper = read.delim(paste0("~/Project/PanCancerAtlas/cache/",dataset,"/meta/","metadata.txt.gz"))
 
@@ -15,7 +15,7 @@ paper.col = c('Source.Name','Comment.ENA_SAMPLE.','Characteristics.age.',
 
 meta.paper = meta.paper[,colnames(meta.paper) %in% paper.col]
 
-saveRDS(meta.paper,file = paste0("~/Project/PanCancerAtlas/cache/",dataset,'/meta.paper.rds'))
+saveRDS(meta.paper,file = paste0("~/Project/PanCancerAtlas/cache/",dataset,'/sample.meta.paper.rds'))
 
 gs <- as.list(sample(10:100, size=100, replace=TRUE))
 ## sample gene sets

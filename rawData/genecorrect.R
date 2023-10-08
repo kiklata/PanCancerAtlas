@@ -17,7 +17,7 @@ gene.correct = function(obj, map) {
     hgnc.check = checkGeneSymbols(exp.gene, species = 'human', map = human.map)
   })  
   
-  remove.gene = hgnc.check %>% filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
+  remove.gene = hgnc.check %>% dplyr::filter(., is.na(.$Suggested.Symbol) == T) %>% .$x
 
   count = obj[['RNA']]@counts
   
@@ -37,7 +37,7 @@ gene.correct = function(obj, map) {
     cli_alert_success("Removed {n.remove} non-HGNC validated symbols")
   }
   
-  trans.gene = filter(hgnc.check, Approved == 'FALSE') %>% filter(., Suggested.Symbol != '') # all symbols need to be converted
+  trans.gene = dplyr::filter(hgnc.check, Approved == 'FALSE') %>% dplyr::filter(., Suggested.Symbol != '') # all symbols need to be converted
   
   n.trans.gene = length(trans.gene$x)
   

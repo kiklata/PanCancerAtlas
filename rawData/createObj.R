@@ -1,20 +1,20 @@
 source("~/Project/PanCancerAtlas/munge/rawData/genecorrect.R")
 new.path = '~/Project/PanCancerAtlas/cache/'
+hgnc_complete_set <- read.delim("~/Reference/hgnc_complete_set.txt",as.is = TRUE)  
+human.map = HGNChelper::getCurrentHumanMap(local = T, map = hgnc_complete_set)
 
-human.map = HGNChelper::getCurrentHumanMap()
-
-library(dplyr)
+#library(dplyr)
 
 # correct gene symbol ---------------------------------------------
 
 # seu --------------
 
-data = 'BRCA_25'
+data = 'NET_2'
 
 seu.list@assays[["RNA"]]@data@Dimnames[[2]] %>% stringr::str_sub(.,18) %>% table
 seu.list$sample_name = seu.list@assays[["RNA"]]@data@Dimnames[[2]] %>% stringr::str_sub(.,1,-18)
 
-seu.list$sample_name = paste0(seu.list$sample_id)
+seu.list$sample_name = paste0(seu.list$biosample_id)
 seu.list$sample_name = Idents(seu.list)
 seu.list$sample_name = data
 
@@ -30,17 +30,11 @@ for (i in 1:length(seu.list)) {
   #seu.list[[i]]$sample_name = paste0(names(seu.list)[i],'_',seu.list[[i]]@assays[["RNA"]]@data@Dimnames[[2]] %>% substring(.,18))
 }
 
-#sample_name = character()
-#for (i in 1:ncol(seu.list)) {
-#  sample_name[i] = paste0(strsplit(seu.list@assays[["RNA"]]@data@Dimnames[[2]][i],split = '\\.')[[1]][1],"_",
-#                                     strsplit(seu.list@assays[["RNA"]]@data@Dimnames[[2]][i],split = '\\.')[[1]][2])}
-
 seu.list = merge(seu.list[[1]],seu.list[2:length(seu.list)],add.cell.ids = names(seu.list)) 
 
 seu.list = seu.list %>% gene.correct(., map = human.map)
 
 saveRDS(seu.list,file = paste0(new.path,data,"/seu.list.rds"))
-
 
 # ENSG --------------------------------------------------------------------
 convertENSG = function(count, meta) {

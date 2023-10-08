@@ -2,45 +2,48 @@ library(Seurat)
 library(dplyr)
 
 # basic--------------
-count = Read10X('~/Project/PanCancerAtlas/data/AML_7/raw/HTO_R306_R309')
+count = Read10X('~/Project/PanCancerAtlas/data/NET_2')
 count = Read10X_h5('~/Project/tempData/SKCM_10/GSE174401_filtered_feature_bc_matrix.h5')
 
-meta = data.table::fread('~/Project/tempData/STAD_9/GSE234129_meta.tsv.gz') %>% as.data.frame()
+meta = data.table::fread('~/Project/PanCancerAtlas/data/NET_2/Final_SCP_Metadata.txt') %>% as.data.frame()
 rownames(meta) = meta$cell_barcodes
-seu = CreateSeuratObject(count,min.cells = 3,min.features = 200)
+seu = CreateSeuratObject(count)
 seu = AddMetaData(seu,meta)
-saveRDS(seu,file = '~/Project/tempData/STAD_9/seu/STAD_9.rds')
+saveRDS(seu,file = '~/Project/PanCancerAtlas/data/NET_2/seu/seu.list.rds')
 
 # named based samples------------
 #subdir = 'F'
-wd = paste0('~/Project/PanCancerAtlas/data/BRCA_25/')
+wd = paste0('~/Project/PanCancerAtlas/data/AML_17/')
 all.sample = list.dirs(wd,recursive = F,full.names = F)
 all.sample = list.files(wd,recursive = F,full.names = F,pattern = 'filter')
 
-samples.name = stringr::str_sub(all.sample,12,-31)
+samples.name = stringr::str_sub(all.sample,1,-10)
 samples.name = all.sample
-samples.name = c('UM1','UM23')
+#samples.name = c('UM1','UM23')
 #barcodes = list.files(wd,pattern = '.barcode',recursive = T)
 #features = list.files(wd,pattern = '.gene',recursive = T)
 #matrixs = list.files(wd,pattern = '.matrix',recursive = T)
-
+count.list = list()
 seu.list=list()
-for (i in 1:length(all.sample)) {
+for (i in all.sample[c(1:7,12,16,19:31)]) {
 
-  count = Read10X(paste0(wd,all.sample[i]),)
+  #count = Read10X(paste0(wd,all.sample[i]))
+  count = count.list[[i]]
   #count = count[,!colnames(count) %>% duplicated()]
   #count = count[rownames(count)[substring(rownames(count),1,6)=='GRCh38'],]
   #rownames(count) = gsub('GRCh38_','',x = rownames(count))
   #count = Read10X_h5(paste0(wd,all.sample[i]))
   
-  seu = CreateSeuratObject(count,min.features = 200)
-  #seu = CreateSeuratObject(count$`Gene Expression`,min.features = 200)
+  seu = CreateSeuratObject(count)
+  #seu = CreateSeuratObject(count$`Gene Expression`)
   #seu[['CMO']] = CreateAssayObject(counts = count$`Multiplexing Capture`[,colnames(seu)])
   
   #meta = read.delim(paste0(wd,i,'/metadata.csv.gz'))
   #rownames(meta) = meta[,1]
   #seu = AddMetaData(seu,meta)
-  seu.list[[samples.name[i]]] = seu
+  seu.list[[i]] = seu
+  #count.list[[samples.name[i]]] = count
+  
 }
 saveRDS(seu.list,file = paste0(wd,'seu/seu.list.rds'))
 
@@ -95,10 +98,10 @@ saveRDS(cell,file = '~/Project/PanCancerAtlas/data/NSCLC_12/cell_meta.rds')
 
 # count samples--------------
 
-dataset = c('~/Project/PanCancerAtlas/data/MM_15/')
-filea = list.files(dataset,recursive = F,full.names = F,pattern = 'gz')
+dataset = c('~/Project/PanCancerAtlas/data/HNSC_11/')
+filea = list.files(paste0(dataset,'raw/'),recursive = F,full.names = F,pattern = 'rds')
 #tags = list.files(dataset,recursive = F,full.names = F,pattern = 'Sample')
-samples = stringr::str_sub(filea,12,-26)
+samples = stringr::str_sub(filea,1,-20)
 seu.list=list()
 count = data.table::fread(paste0(dataset,filea[2])) %>% as.data.frame()
 #tag = data.table::fread(paste0(dataset,tags[1])) %>% as.data.frame()
@@ -119,7 +122,8 @@ count[1:5,1:5]
 for (i in 1:length(filea)) {
 #count = data.table::fread(paste0(dataset,filea[i])) %>%
 # as.data.frame() %>% reshape2::dcast(.,Cell_Index~Gene,value.var = 'RSEC_Adjusted_Molecules') %>% data.table::setnafill(.,fill = 0)
-count = data.table::fread(paste0(dataset,filea[i])) %>% as.data.frame() 
+#count = data.table::fread(paste0(dataset,filea[i])) %>% as.data.frame() 
+count = readRDS(paste0(dataset,'raw/',filea[i]))
 #tag = data.table::fread(paste0(dataset,tags[i])) %>% as.data.frame()
 #colnames(count) = paste0('cell_',count[1,])
 #count = count[-1,]
@@ -131,13 +135,13 @@ count = data.table::fread(paste0(dataset,filea[i])) %>% as.data.frame()
 
 #count = count[!duplicated(count[,2]),]
 #count = count[!is.na(count[,2]),]
-rownames(count) = paste0(count[,1])
+#rownames(count) = paste0(count[,1])
 #rownames(tag) = paste0('cell_',tag[,1])
 
 #for (k in 1:nrow(count)) {  rownames(count)[k] = strsplit(count[k,1],'__')[[1]][1]}
 #meta = count[,2] %>% as.data.frame()
 #colnames(meta) = 'Cluster_orig'
-count[,c(1)] = NULL
+#count[,c(1)] = NULL
 #for (k in 1:ncol(count)){colnames(count)[k] = strsplit(colnames(count)[k],'\\|')[[1]][1]}
 #colnames(count) = gsub('_membrane','',colnames(count)) %>% gsub('_secreted','',.) %>% gsub('_refseq','',.)
 #count = t(count)
@@ -149,7 +153,7 @@ count[,c(1)] = NULL
 #count = count[,colnames(count)[!duplicated(colnames(count))]]
 #count = t(count)
 #colnames(count) = paste0('cell_',colnames(count))
-seu = CreateSeuratObject(count)
+seu = CreateSeuratObject(count,min.cells = 3,min.features = 200)
 #seu = AddMetaData(seu,meta)
 #seu = AddMetaData(seu,meta)
 seu.list[[samples[i]]] = seu
@@ -161,9 +165,21 @@ saveRDS(seu.list,file = paste0(dataset,'seu/','seu.list.rds'))
 rm(list = ls())
 
 
+# sub rds files -----------------------------------------------------------
+
+dataset = c('~/Project/PanCancerAtlas/data/SCC_5/')
+filea = list.files(paste0(dataset),recursive = F,full.names = F,pattern = 'rds')
+samples = stringr::str_sub(filea,1,-5)
+seu.list=list()
+for (i in 1:length(samples)) {
+  seu = readRDS(paste0(dataset,filea[i])) %>% UpdateSeuratObject(.)
+  seu.list[[samples[i]]] = seu
+}
+saveRDS(seu.list,file = paste0(dataset,'seu/seu.list.rds'))
+
 
 # get samplename ----------------------------------------------------------
-dataset = c('~/Project/PanCancerAtlas/data/BRCA_25/')
+dataset = c('~/Project/PanCancerAtlas/data/AML_17/')
 filea = list.files(dataset,recursive = F,full.names = F,pattern = 'GSM') %>% grep('barcodes',.,value = T)
 samples =  stringr::str_sub(filea,12,-17) %>% as.data.frame(.)
 write.table(samples,file = '~/samples.txt',col.names = F,row.names = F,quote = F,sep = '\t')

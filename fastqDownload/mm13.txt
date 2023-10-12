@@ -1,4 +1,0 @@
-https://sra-pub-src-1.s3.amazonaws.com/SRR18856594/2168_WUSTL_scRNAseq_possorted_genome_bam.bam.1 
-https://sra-pub-src-2.s3.amazonaws.com/SRR18856567/2251_ISMMS_scRNAseq_possorted_genome_bam.bam.1 
-https://sra-pub-src-2.s3.amazonaws.com/SRR18856593/2251_WUSTL_scRNAseq_possorted_genome_bam.bam.1 
-https://sra-pub-src-2.s3.amazonaws.com/SRR18856592/2259_WUSTL_scRNAseq_possorted_genome_bam.bam.1 

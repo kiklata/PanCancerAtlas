@@ -1,2 +1,0 @@
-ascp -QT -l 300m -P 33001  -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR217/048/SRR21748848/SRR21748848_1.fastq.gz .
-ascp -QT -l 300m -P 33001  -i /home/zhepan/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/SRR217/048/SRR21748848/SRR21748848_2.fastq.gz .

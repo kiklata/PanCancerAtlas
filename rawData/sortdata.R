@@ -12,5 +12,6 @@ for (i in dataset) {
                           vdj = tmp %>% grep('VDJ',.,value = T))
 }
 
-list.filter(info.list,length(meta) != 0) %>% names
-list.filter(info.list,length(vdj) != 0) %>% names
+obj_only = list.filter(info.list,length(meta) == 0 & length(vdj) == 0) %>% names
+meta_cura = list.filter(info.list,length(meta) != 0) %>% names
+vdj_cura = list.filter(info.list, length(vdj) != 0) %>% names

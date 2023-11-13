@@ -1,6 +1,6 @@
 library(rlist)
 
-path = '~/Project/PanCancerAtlas/cache'
+path = 'data'
 dataset = list.dirs(path,full.names = F,recursive = F)
 info.list = list()
 
